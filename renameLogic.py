@@ -32,7 +32,11 @@ def rename_anime(folder_directory, name, season, template):
 
 
 def rename_file(folder_directory, template):
-
+    """
+    Renames the files of the selected directory
+    :param folder_directory: path of the folder in which the files are stored
+    :param template: template to follow when renaming the files
+    """
     current_number = 1
     file_list = natsorted(os.listdir(folder_directory))
     for file in file_list:
