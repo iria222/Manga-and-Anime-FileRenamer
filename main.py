@@ -15,6 +15,7 @@ class Application:
         main_window = tkinter.Tk()
         main_window.title("File renamer")
         center_window(main_window)
+        main_window.resizable(False, False)
         notebook = Notebook(main_window)
 
         manga_frame = MangaFrame()
