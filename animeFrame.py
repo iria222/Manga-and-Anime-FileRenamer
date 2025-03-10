@@ -1,8 +1,8 @@
-from tkinter import Label, Entry, font
+from tkinter import Label, Entry, font, messagebox
 
 from renameLogic import *
 
-anime_template = """{name} S{season_number:02d}E{{current_number:02d}}"""
+
 class AnimeFrame(tkinter.Frame):
 
     def __init__(self):
@@ -36,6 +36,51 @@ class AnimeFrame(tkinter.Frame):
         directory_button.grid(row=2, column=2, **padding, sticky="w")
 
         rename_files_button = tkinter.Button(self, text="Rename files",
-                                             command=lambda: rename_anime(current_directory.get(), name_entry.get(),
-                                                                          season_entry.get(), anime_template))
+                                             command=lambda: AnimeFrame.rename_files(name_entry.get(), directory_entry.get(),
+                                                                                     season_entry.get()))
         rename_files_button.grid(row=3, column=1, **padding, sticky="ns")
+
+    @staticmethod
+    def rename_files(name, folder_directory, season):
+        """
+        Rename files inside a folder
+        :param name: anime's name
+        :param folder_directory: path of the selected folder
+        :param season: anime's season
+        :return: function to call to rename files
+        """
+        if AnimeFrame.check_fields(name, folder_directory, season):
+            return rename_anime(folder_directory, name, season)
+        else:
+            return 1
+
+    @staticmethod
+    def check_fields(name, folder_directory, season) -> bool:
+        """
+        Check if the gui fields are filled correctly
+        :param name: anime's name
+        :param folder_directory: path of the selected folder
+        :param season: anime's season
+        :return: if fields are filled correctly or not
+        """
+        if name == "":
+            tkinter.messagebox.showerror("Error", "Name field can't be empty")
+            return False
+
+        if season == "":
+            tkinter.messagebox.showerror("Error", "Season field can't be empty")
+            return False
+
+        if not season.isdigit():
+            tkinter.messagebox.showerror("Error", "Season must be a positive integer number")
+            return False
+
+        if folder_directory == "":
+            tkinter.messagebox.showerror("Error", "Folder directory can't be empty")
+            return False
+
+        if not (os.path.exists(folder_directory) and os.path.isdir(folder_directory)):
+            tkinter.messagebox.showerror("Error", "Folder directory is not valid")
+            return False
+
+        return True
