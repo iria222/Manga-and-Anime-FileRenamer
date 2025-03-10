@@ -1,7 +1,7 @@
 from renameLogic import *
 from tkinter import Label, Entry, font
 
-manga_template = """{name} V{{current_number:02d}}"""
+
 class MangaFrame(tkinter.Frame):
 
     def __init__(self):
@@ -27,6 +27,5 @@ class MangaFrame(tkinter.Frame):
         directory_button.grid(row=1, column=2, **padding, sticky="w")
 
         rename_files_button = tkinter.Button(self, text="Rename files",
-                                             command=lambda: rename_manga(current_directory.get(), name_entry.get(),
-                                                                          manga_template))
+                                             command=lambda: rename_manga(current_directory.get(), name_entry.get()))
         rename_files_button.grid(row=2, column=1, **padding, sticky="ns")
