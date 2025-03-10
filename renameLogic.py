@@ -35,8 +35,6 @@ def rename_manga(folder_directory, name):
     :param folder_directory: route of selected folder
     :param name: manga's name
     """
-    if not can_be_renamed(folder_directory, name):
-        return 1
     #template = template.format(name = name)
     template = partial(manga_template.format, name = name)
     rename_file(folder_directory, template)
@@ -75,24 +73,3 @@ def rename_file(folder_directory, template):
         current_number += 1
 
     tkinter.messagebox.showinfo("Info", "The files have been renamed")
-
-def can_be_renamed(folder_directory, name) -> bool:
-    """
-    Checks if a list of files can be renamed
-    :param folder_directory: path of the selected folder
-    :param name: name of the anime/manga
-    :return: can or cannot be renamed
-    """
-    if name == "":
-        tkinter.messagebox.showerror("Error", "Name field can't be empty")
-        return False
-
-    if folder_directory == "":
-        tkinter.messagebox.showerror("Error","Folder directory can't be empty")
-        return False
-
-    if not (os.path.exists(folder_directory) and os.path.isdir(folder_directory)):
-        tkinter.messagebox.showerror("Error", "Folder directory is not valid")
-        return False
-
-    return True

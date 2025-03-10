@@ -61,7 +61,8 @@ class AnimeFrame(tkinter.Frame):
         :param name: anime's name
         :param folder_directory: path of the selected folder
         :param season: anime's season
-        :return: if fields are filled correctly or not
+        :return: True if fields are filled correctly or not
+                 False if not
         """
         if name == "":
             tkinter.messagebox.showerror("Error", "Name field can't be empty")

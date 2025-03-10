@@ -1,5 +1,7 @@
+from tabnanny import check
+
 from renameLogic import *
-from tkinter import Label, Entry, font
+from tkinter import Label, Entry, font, messagebox
 
 
 class MangaFrame(tkinter.Frame):
@@ -27,5 +29,41 @@ class MangaFrame(tkinter.Frame):
         directory_button.grid(row=1, column=2, **padding, sticky="w")
 
         rename_files_button = tkinter.Button(self, text="Rename files",
-                                             command=lambda: rename_manga(current_directory.get(), name_entry.get()))
+                                             command=lambda: MangaFrame.rename_files(name_entry.get(), directory_entry.get()))
         rename_files_button.grid(row=2, column=1, **padding, sticky="ns")
+
+    @staticmethod
+    def rename_files(name, folder_directory):
+        """
+        Rename files inside a folder
+        :param name: manga's name
+        :param folder_directory: path of the selected folder
+        :return: function to call to rename files
+        """
+        if MangaFrame.check_fields(name, folder_directory):
+            return rename_manga(folder_directory, name)
+        else:
+            return 1
+
+    @staticmethod
+    def check_fields(name, folder_directory) -> bool:
+        """
+        Check if the gui fields are filled correctly
+        :param name: manga's name
+        :param folder_directory: path of the selected folder
+        :return: True if fields are filled correctly or not
+                 False if not
+        """
+        if name == "":
+            tkinter.messagebox.showerror("Error", "Name field can't be empty")
+            return False
+
+        if folder_directory == "":
+            tkinter.messagebox.showerror("Error", "Folder directory can't be empty")
+            return False
+
+        if not (os.path.exists(folder_directory) and os.path.isdir(folder_directory)):
+            tkinter.messagebox.showerror("Error", "Folder directory is not valid")
+            return False
+
+        return True
