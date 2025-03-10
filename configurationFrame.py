@@ -12,7 +12,7 @@ class ConfigurationFrame(tkinter.Frame):
         manga_label = Label(self, text= "Manga template")
         manga_label.grid(row = 0, column = 0, **padding, sticky = "w")
 
-        manga_entry = Entry(self)
+        manga_entry = Entry(self, width = 50)
         manga_entry.grid(row = 0, column = 1, **padding, sticky = "w")
 
         save_manga_button = Button(self, text= "Save")
@@ -21,7 +21,7 @@ class ConfigurationFrame(tkinter.Frame):
         anime_label = Label(self, text="Anime template")
         anime_label.grid(row=1, column=0, **padding, sticky="w")
 
-        anime_entry = Entry(self)
+        anime_entry = Entry(self, width = 50)
         anime_entry.grid(row=1, column=1, **padding, sticky="w")
 
         save_anime_button = Button(self, text="Save")
