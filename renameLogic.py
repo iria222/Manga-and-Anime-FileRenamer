@@ -2,10 +2,11 @@ import os
 import tkinter
 from functools import partial
 from tkinter import filedialog, messagebox
+
 from natsort import natsorted
 
-default_anime_template = """{name} S{season_number:02d}E{current_number:02d}"""
-default_manga_template = """{name} V{current_number:02d}"""
+default_anime_template = """{name} S{season_number:02d}E{episode_number:02d}"""
+default_manga_template = """{name} V{volume_number:02d}"""
 
 anime_template = default_anime_template
 manga_template = default_manga_template
@@ -14,9 +15,15 @@ def set_manga_template(template):
     global manga_template
     manga_template = template
 
+def get_manga_template():
+    return manga_template
+
 def set_anime_template(template):
     global anime_template
     anime_template = template
+
+def get_anime_template():
+    return anime_template
 
 def select_directory(current_directory):
     """
@@ -36,7 +43,9 @@ def rename_manga(folder_directory, name):
     :param name: manga's name
     """
     #template = template.format(name = name)
-    template = partial(manga_template.format, name = name)
+    global manga_template
+    aux_manga_template = manga_template.replace("{volume_number", "{current_number")
+    template = partial(aux_manga_template.format, name = name)
     rename_file(folder_directory, template)
 
 
@@ -49,7 +58,10 @@ def rename_anime(folder_directory, name, season):
     """
     season = int(season)
     #template = template.format(name = name, season_number = season)
-    template = partial(anime_template.format, name = name, season_number = season)
+    global anime_template
+    aux_anime_template = anime_template.replace("{episode_number", "{current_number")
+    template = partial(aux_anime_template.format, name = name, season_number = season)
+
     rename_file(folder_directory, template)
 
 
