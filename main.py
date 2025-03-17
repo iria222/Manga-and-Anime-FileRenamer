@@ -13,8 +13,9 @@ class Application:
 
     def __init__(self):
         main_window = tkinter.Tk()
-        main_window.title("File renamer")
         center_window(main_window)
+        main_window.title("File renamer")
+
         main_window.resizable(False, False)
         notebook = Notebook(main_window)
 
