@@ -45,16 +45,31 @@ class TemplatesWindow(tkinter.Toplevel):
 
 
     def is_manga_template_correct(self) -> bool:
-        if not re.search(r'\{name}', self.new_manga_template.get()):
+        template = self.new_manga_template.get()
+        if not re.search(r'\{name}', template):
+            messagebox.showerror("Error", "Manga template must contain \"{name}\"")
             return False
 
-        if not re.search(r'\{volume_number(:\d\dd)?}', self.new_manga_template.get()):
+        if not re.search(r'\{volume_number(:\d\dd)?}', template):
+            messagebox.showerror("Error", "Manga template must contain \"{volume_number}\"")
             return False
 
         return True
 
     def is_anime_template_correct(self) -> bool:
-        #TODO: check if the new anime template contains the necessary fields
+        template = self.new_anime_template.get()
+        if not re.search(r'\{name}', template):
+            messagebox.showerror("Error", "Anime template must contain \"{name}\"")
+            return False
+
+        if not re.search(r'\{season(:\d\dd)?}', template):
+            messagebox.showerror("Error", "Anime template must contain \"{season}\"")
+            return False
+
+        if not re.search(r'\{episode_number(:\d\dd)?}', template):
+            messagebox.showerror("Error", "Anime template must contain \"{episode_number}\"")
+            return False
+
         return True
 
     def fill_template_lists(self):
@@ -81,7 +96,6 @@ class TemplatesWindow(tkinter.Toplevel):
 
     def add_manga_template(self):
         if not self.is_manga_template_correct():
-            messagebox.showerror("Error", "The manga template entered is not correct")
             return 1
 
         if self.new_manga_template.get() in self.manga_template_list:
@@ -97,7 +111,6 @@ class TemplatesWindow(tkinter.Toplevel):
 
     def add_anime_template(self):
         if not self.is_anime_template_correct():
-            messagebox.showerror("Error", "The anime template entered is not correct")
             return 1
 
         if self.new_anime_template.get() in self.anime_template_list:
