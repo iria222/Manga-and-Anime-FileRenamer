@@ -29,8 +29,14 @@ class ConfigurationFrame(tkinter.Frame):
         open_temp_window_button = Button(self, text= "Edit templates",
                                          command= self.open_templates_window)
         open_temp_window_button.grid(row = 2, column = 1, **padding)
-        #TODO: change the current templates when the combobox selection is changed
 
+    def change_current_manga_template(self):
+        #TODO: change the current manga template to the selected one
+        pass
+
+    def change_current_anime_template(self):
+        #TODO: change the current anime template to the selected one
+        pass
 
     def open_templates_window(self):
         self.templates_window = TemplatesWindow()

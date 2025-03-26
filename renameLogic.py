@@ -11,35 +11,22 @@ default_manga_template = """{name} V{volume_number:02d}"""
 anime_template = default_anime_template
 manga_template = default_manga_template
 
-def set_manga_template(template):
-    global manga_template
-    manga_template = template
-
-def get_manga_template():
-    return manga_template
-
-def set_anime_template(template):
-    global anime_template
-    anime_template = template
-
-def get_anime_template():
-    return anime_template
 
 def select_directory(current_directory):
     """
-    Sets the directory selected by the user as the current directory
-    :param current_directory: folder route
+    Sets the passed path as the current directory
+    :param current_directory: folder path
     """
-    directory_route = filedialog.askdirectory()
-    if directory_route != "":
-        directory_route += "/"
-        current_directory.set(directory_route)
+    directory_path = filedialog.askdirectory()
+    if directory_path != "":
+        directory_path += "/"
+        current_directory.set(directory_path)
 
 
 def rename_manga(folder_directory, name):
     """
     Renames a list of files using the manga template
-    :param folder_directory: route of selected folder
+    :param folder_directory: path of the folder where the files are stored
     :param name: manga's name
     """
     #template = template.format(name = name)
@@ -52,7 +39,7 @@ def rename_manga(folder_directory, name):
 def rename_anime(folder_directory, name, season):
     """
     Rename a list of files using the anime template
-    :param folder_directory: route of selected folder
+    :param folder_directory: path of the folder where the files are stored
     :param name: anime's name
     :param season: season of the anime's episodes
     """
@@ -67,7 +54,7 @@ def rename_anime(folder_directory, name, season):
 
 def rename_file(folder_directory, template):
     """
-    Renames the files of the selected directory
+    Renames the files of the passed directory
     :param folder_directory: path of the folder in which the files are stored
     :param template: template to follow when renaming the files
     """
