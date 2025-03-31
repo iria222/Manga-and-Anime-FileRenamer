@@ -2,11 +2,13 @@ import tkinter
 import re
 from tkinter import Listbox, Entry, Button, Label, Frame, StringVar, messagebox
 from tkinter.constants import MULTIPLE
+from DBManager import get_templates, insert_template
+from Data.globalData import TemplateType
 
 
 class TemplatesWindow(tkinter.Toplevel):
 
-    def __init__(self):
+    def __init__(self, update_func):
         super().__init__()
 
         """
@@ -17,8 +19,8 @@ class TemplatesWindow(tkinter.Toplevel):
         self.manga_template_frame = Frame(self)
         self.anime_template_frame = Frame(self)
 
-        self.manga_template_list = ["Noragami", "Bungou Stray Dogs"] #List that contains the manga templates
-        self.anime_template_list = ["Chainsaw Man", "Vanitas no Carte"] #List that contains the anime templates
+        self.manga_template_list = list(get_templates(TemplateType.manga)) #List that contains the manga templates
+        self.anime_template_list = list(get_templates(TemplateType.anime)) #List that contains the anime templates
 
         self.manga_listbox = Listbox()
         self.anime_listbox = Listbox()
@@ -36,6 +38,7 @@ class TemplatesWindow(tkinter.Toplevel):
         self.focus()
         self.grab_set()
         self.config(background= "white")
+        self.protocol("WM_DELETE_WINDOW", lambda: self.on_closing(update_func))
 
         self.fill_manga_frame()
         self.fill_anime_frame()
@@ -43,6 +46,9 @@ class TemplatesWindow(tkinter.Toplevel):
         self.manga_template_frame.pack(side = "left", padx = 20, pady = 20)
         self.anime_template_frame.pack(side = "right", padx = 20, pady = 20)
 
+    def on_closing(self, update_func):
+        update_func()
+        self.destroy()
 
     def is_manga_template_correct(self) -> bool:
         template = self.new_manga_template.get()
@@ -62,8 +68,8 @@ class TemplatesWindow(tkinter.Toplevel):
             messagebox.showerror("Error", "Anime template must contain \"{name}\"")
             return False
 
-        if not re.search(r'\{season(:\d\dd)?}', template):
-            messagebox.showerror("Error", "Anime template must contain \"{season}\"")
+        if not re.search(r'\{season_number(:\d\dd)?}', template):
+            messagebox.showerror("Error", "Anime template must contain \"{season_number}\"")
             return False
 
         if not re.search(r'\{episode_number(:\d\dd)?}', template):
@@ -72,9 +78,6 @@ class TemplatesWindow(tkinter.Toplevel):
 
         return True
 
-    def fill_template_lists(self):
-        #TODO: read templates from database and fill lists with the data
-        pass
 
     def delete_anime_template(self):
         selected_items = self.anime_listbox.curselection()
@@ -104,8 +107,7 @@ class TemplatesWindow(tkinter.Toplevel):
 
         self.manga_template_list.append(self.new_manga_template.get())
         self.manga_listbox_items.set(self.manga_template_list)
-        #TODO: add the new template to the DB
-
+        insert_template(self.new_manga_template.get(), TemplateType.manga)
         self.new_manga_template.set("")
         return 0
 
@@ -119,8 +121,7 @@ class TemplatesWindow(tkinter.Toplevel):
 
         self.anime_template_list.append(self.new_anime_template.get())
         self.anime_listbox_items.set(self.anime_template_list)
-        # TODO: add the new template to the DB
-
+        insert_template(self.new_anime_template.get(), TemplateType.anime)
         self.new_anime_template.set("")
         return 0
 

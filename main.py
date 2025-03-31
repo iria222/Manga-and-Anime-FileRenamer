@@ -1,9 +1,9 @@
 import tkinter
 from tkinter.ttk import Notebook
 
-from animeFrame import AnimeFrame
-from configurationFrame import ConfigurationFrame
-from mangaFrame import MangaFrame
+from GUI.animeFrame import AnimeFrame
+from GUI.configurationFrame import ConfigurationFrame
+from GUI.mangaFrame import MangaFrame
 
 current_directory : tkinter.StringVar
 

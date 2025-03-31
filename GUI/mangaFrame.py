@@ -1,7 +1,6 @@
-from tabnanny import check
+from tkinter import Label, Entry, font, messagebox
 
 from renameLogic import *
-from tkinter import Label, Entry, font, messagebox
 
 
 class MangaFrame(tkinter.Frame):

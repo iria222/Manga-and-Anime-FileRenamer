@@ -2,7 +2,6 @@ from tkinter import Label, Entry, font, messagebox
 
 from renameLogic import *
 
-
 class AnimeFrame(tkinter.Frame):
 
     def __init__(self):
