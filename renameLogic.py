@@ -4,7 +4,7 @@ from functools import partial
 from tkinter import filedialog, messagebox
 from natsort import natsorted
 
-from Data.globalData import anime_template, manga_template
+import Data.globalData as globalData
 
 
 def select_directory(current_directory):
@@ -24,7 +24,7 @@ def rename_manga(folder_directory, name):
     :param folder_directory: path of the folder where the files are stored
     :param name: manga's name
     """
-    aux_manga_template = manga_template.replace("{volume_number", "{current_number")
+    aux_manga_template = globalData.manga_template.replace("{volume_number", "{current_number")
     template = partial(aux_manga_template.format, name = name)
     rename_file(folder_directory, template)
 
@@ -37,7 +37,7 @@ def rename_anime(folder_directory, name, season):
     :param season: season of the anime's episodes
     """
     season = int(season)
-    aux_anime_template = anime_template.replace("{episode_number", "{current_number")
+    aux_anime_template = globalData.anime_template.replace("{episode_number", "{current_number")
     template = partial(aux_anime_template.format, name = name, season_number = season)
 
     rename_file(folder_directory, template)

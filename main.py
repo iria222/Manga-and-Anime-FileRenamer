@@ -8,7 +8,6 @@ from GUI.mangaFrame import MangaFrame
 current_directory : tkinter.StringVar
 
 
-
 class Application:
 
     def __init__(self):
