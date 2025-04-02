@@ -1,16 +1,16 @@
-from contextlib import closing
 
 from Data.globalData import TemplateType, database
 from tkinter import messagebox
 import sqlite3
 
 
-def get_templates(template_type : TemplateType):
+def get_templates(template_type : TemplateType) -> list:
     """
     Read the templates from the DB
     :param template_type: type of the templates to obtain
     :return: a list of templates
     """
+    result = []
     with sqlite3.connect(database) as sqliteConnection:
         try:
             cursor = sqliteConnection.cursor()
@@ -21,11 +21,10 @@ def get_templates(template_type : TemplateType):
 
             query = f"SELECT Template from {table}"
             cursor.execute(query)
-            result = cursor.fetchall()
+            result = [item[0] for item in cursor.fetchall()]
 
         except sqlite3.Error as error:
-            messagebox.showerror("Error", f"Error occurred - {error}")
-
+            messagebox.showerror("Error", f"Error occurred when accessing the database - {error}")
         finally:
             if cursor:
                 cursor.close()
@@ -51,8 +50,8 @@ def insert_template(template, template_type : TemplateType):
             cursor.execute(query, (template, False, False))
 
         except sqlite3.Error as error:
-            messagebox.showerror("Error", f"Error occurred - {error}")
-
+            messagebox.showerror("Error", f"Error occurred when accessing the database - {error}")
+            return 1
         finally:
             if cursor:
                 cursor.close()
@@ -63,18 +62,57 @@ def delete_template(template, template_type: TemplateType):
     :param template_type: type of the passed template
     :param template: template to delete
     """
+    if is_default(template, template_type):
+        messagebox.showerror("Error", "The default template cannot be deleted")
+        return 1
+
     with sqlite3.connect(database) as sqliteConnection:
         try:
             cursor = sqliteConnection.cursor()
-            #TODO: delete a template from the DB
+
+            if template_type == TemplateType.anime:
+                table = "AnimeTemplates"
+            else:
+                table = "MangaTemplates"
+
+            query = f"DELETE FROM {table} WHERE Is_Default = FALSE AND Template = '{template}'"
+            cursor.execute(query)
 
         except sqlite3.Error as error:
-            messagebox.showerror("Error", f"Error occurred - {error}")
+            messagebox.showerror("Error", f"Error occurred when accessing the database - {error}")
+            return 1
 
         finally:
             if cursor:
                 cursor.close()
 
+def is_default(template, template_type: TemplateType) -> bool:
+    """
+    Checks if a template is the default one
+    :param template: template to check
+    :param template_type: type of the passed template
+    :return: True if the template is the default
+             False if not
+    """
+    with sqlite3.connect(database) as sqliteConnection:
+        try:
+            cursor = sqliteConnection.cursor()
+            if template_type == TemplateType.anime:
+                table = "AnimeTemplates"
+            else:
+                table = "MangaTemplates"
+
+            query = f"SELECT EXISTS(SELECT 1 FROM {table} WHERE Is_Default = TRUE AND Template = '{template}')"
+            cursor.execute(query)
+            result = cursor.fetchone()[0]
+
+        except sqlite3.Error as error:
+            messagebox.showerror("Error", f"Error occurred when accessing the database - {error}")
+
+        finally:
+            if cursor:
+                cursor.close()
+            return result
 
 def change_active_template(selected_template, template_type : TemplateType):
     """
@@ -88,7 +126,7 @@ def change_active_template(selected_template, template_type : TemplateType):
             #TODO: change the active template
 
         except sqlite3.Error as error:
-            messagebox.showerror("Error", f"Error occurred - {error}")
+            messagebox.showerror("Error", f"Error occurred when accessing the database - {error}")
 
         finally:
             if cursor:

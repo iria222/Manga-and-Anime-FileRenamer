@@ -31,6 +31,9 @@ class ConfigurationFrame(tkinter.Frame):
         open_temp_window_button.grid(row = 2, column = 1, **padding)
 
     def update_templates(self):
+        """
+        Updates the templates displayed in the comboboxes
+        """
         self.manga_entry.config(values=get_templates(TemplateType.manga))
         self.anime_entry.config(values=get_templates(TemplateType.anime))
 

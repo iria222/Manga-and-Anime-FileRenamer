@@ -2,7 +2,7 @@ import tkinter
 import re
 from tkinter import Listbox, Entry, Button, Label, Frame, StringVar, messagebox
 from tkinter.constants import MULTIPLE
-from DBManager import get_templates, insert_template
+from DBManager import get_templates, insert_template, delete_template
 from Data.globalData import TemplateType
 
 
@@ -51,6 +51,11 @@ class TemplatesWindow(tkinter.Toplevel):
         self.destroy()
 
     def is_manga_template_correct(self) -> bool:
+        """
+        Checks if the new manga template follows a correct pattern
+        :return: True if it follows a correct pattern
+                 False if not
+        """
         template = self.new_manga_template.get()
         if not re.search(r'\{name}', template):
             messagebox.showerror("Error", "Manga template must contain \"{name}\"")
@@ -63,6 +68,11 @@ class TemplatesWindow(tkinter.Toplevel):
         return True
 
     def is_anime_template_correct(self) -> bool:
+        """
+        Checks if the new anime template follows a correct pattern
+        :return: True if it follows a correct pattern
+                 False if not
+        """
         template = self.new_anime_template.get()
         if not re.search(r'\{name}', template):
             messagebox.showerror("Error", "Anime template must contain \"{name}\"")
@@ -78,26 +88,37 @@ class TemplatesWindow(tkinter.Toplevel):
 
         return True
 
-
     def delete_anime_template(self):
+        """
+        Deletes the selected anime templates
+        """
         selected_items = self.anime_listbox.curselection()
         if len(selected_items) > 0:
             for item in selected_items:
+                if delete_template(self.anime_listbox.get(item), TemplateType.anime) == 1:
+                    #The template could not be deleted
+                    continue
                 self.anime_template_list.remove(self.anime_listbox.get(item))
+
             self.anime_listbox_items.set(self.anime_template_list)
-            # TODO: delete the selected anime template from the DB
-        pass
 
     def delete_manga_template(self):
+        """
+        Deletes the selected manga templates
+        """
         selected_items = self.manga_listbox.curselection()
         if len(selected_items) > 0:
             for item in selected_items:
+                if delete_template(self.manga_listbox.get(item), TemplateType.manga) == 1:
+                    #The template could not be deleted
+                    continue
                 self.manga_template_list.remove(self.manga_listbox.get(item))
             self.manga_listbox_items.set(self.manga_template_list)
-        #TODO: delete the selected manga template from the DB
-        pass
 
     def add_manga_template(self):
+        """
+        Inserts a new manga template
+        """
         if not self.is_manga_template_correct():
             return 1
 
@@ -112,6 +133,10 @@ class TemplatesWindow(tkinter.Toplevel):
         return 0
 
     def add_anime_template(self):
+        """
+        Inserts a new anime template
+        :return:
+        """
         if not self.is_anime_template_correct():
             return 1
 
@@ -124,7 +149,6 @@ class TemplatesWindow(tkinter.Toplevel):
         insert_template(self.new_anime_template.get(), TemplateType.anime)
         self.new_anime_template.set("")
         return 0
-
 
     def fill_manga_frame(self):
         """
@@ -150,7 +174,6 @@ class TemplatesWindow(tkinter.Toplevel):
     def fill_anime_frame(self):
         """
         Sets the necessary elements inside the anime frame
-        :return:
         """
         anime_label = Label(self.anime_template_frame, text="ANIME TEMPLATES")
         anime_label.grid(row=0, column=2, columnspan=2, **self.padding)
