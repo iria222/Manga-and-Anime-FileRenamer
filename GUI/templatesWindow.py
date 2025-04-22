@@ -78,6 +78,7 @@ class TemplatesWindow(tkinter.Toplevel):
             messagebox.showerror("Error", "Anime template must contain \"{name}\"")
             return False
 
+        # TODO: make season an optional parameter
         if not re.search(r'\{season_number(:\d\dd)?}', template):
             messagebox.showerror("Error", "Anime template must contain \"{season_number}\"")
             return False
