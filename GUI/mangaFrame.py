@@ -1,6 +1,6 @@
 import tkinter.messagebox
 from tkinter import Label, Entry, font, messagebox
-
+from entryWithPlaceholder import EntryWithPlaceholder
 from renameLogic import *
 
 
@@ -9,6 +9,7 @@ class MangaFrame(tkinter.Frame):
     def __init__(self):
         super().__init__()
         padding = {"padx" : 5, "pady" : 5}
+        self.bind_all("<Button-1>", lambda event: event.widget.focus_set())
 
         name_label = Label(self, text="Manga name: ")
         name_label.grid(row=0, column=0, **padding, sticky="w")
@@ -19,7 +20,7 @@ class MangaFrame(tkinter.Frame):
         starter_number_label = Label(self, text = "Starter number: ")
         starter_number_label.grid(row = 1, column= 0, **padding, sticky="w")
 
-        starter_number_entry = Entry(self)
+        starter_number_entry = EntryWithPlaceholder(self, "1")
         starter_number_entry.grid(row = 1, column = 1, **padding, sticky= "w")
 
         directory_label = Label(self, text="Folder directory:")
@@ -48,8 +49,6 @@ class MangaFrame(tkinter.Frame):
         :return: function to call to rename files
         """
         if MangaFrame.check_fields(name, folder_directory, starter_number):
-            if starter_number == "":
-                return rename_manga(folder_directory, name)
             return rename_manga(folder_directory, name, int(starter_number))
         else:
             return 1

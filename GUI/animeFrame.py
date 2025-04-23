@@ -1,5 +1,5 @@
 from tkinter import Label, Entry, font, messagebox
-
+from entryWithPlaceholder import EntryWithPlaceholder
 from renameLogic import *
 
 class AnimeFrame(tkinter.Frame):
@@ -8,6 +8,7 @@ class AnimeFrame(tkinter.Frame):
         super().__init__()
 
         padding = {"padx": 5, "pady": 5}
+        self.bind_all("<Button-1>", lambda event: event.widget.focus_set())
 
         name_label = Label(self, text="Anime name: ")
         name_label.grid(row=0, column=0, **padding, sticky="w")
@@ -18,13 +19,13 @@ class AnimeFrame(tkinter.Frame):
         starter_number_label = Label(self, text = "Starter number: ")
         starter_number_label.grid(row = 1, column = 0, **padding, sticky="w")
 
-        starter_number_entry = Entry(self)
+        starter_number_entry = EntryWithPlaceholder(self, "1")
         starter_number_entry.grid(row = 1, column = 1, **padding, sticky = "w")
 
         season_label = Label(self, text = "Season number: ")
         season_label.grid(row = 2, column = 0, **padding, sticky="w")
 
-        season_entry = Entry(self)
+        season_entry = EntryWithPlaceholder(self, "1")
         season_entry.grid(row = 2, column = 1, **padding, sticky="w")
 
         directory_label = Label(self, text="Folder directory:")
@@ -45,6 +46,8 @@ class AnimeFrame(tkinter.Frame):
                                                                                      season_entry.get(), starter_number_entry.get()))
         rename_files_button.grid(row=4, column=1, **padding, sticky="ns")
 
+
+
     @staticmethod
     def rename_files(name, folder_directory, season, starter_number):
         """
@@ -56,9 +59,7 @@ class AnimeFrame(tkinter.Frame):
         :return: function to call to rename files
         """
         if AnimeFrame.check_fields(name, folder_directory, season, starter_number):
-            if starter_number == "":
-                return rename_anime(folder_directory, name, season)
-            return rename_anime(folder_directory, name, season, int(starter_number))
+            return rename_anime(folder_directory, name, int(season), int(starter_number))
         else:
             return 1
 
@@ -77,12 +78,8 @@ class AnimeFrame(tkinter.Frame):
             tkinter.messagebox.showerror("Error", "Name field can't be empty")
             return False
 
-        if starter_number != "" and not starter_number.isdigit():
+        if not starter_number.isdigit():
             tkinter.messagebox.showerror("Error", "Starter number must be a positive integer number")
-            return False
-        # TODO: make season an optional parameter
-        if season == "":
-            tkinter.messagebox.showerror("Error", "Season field can't be empty")
             return False
 
         if not season.isdigit():

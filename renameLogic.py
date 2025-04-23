@@ -29,8 +29,7 @@ def rename_manga(folder_directory, name, starter_number = 1):
     template = partial(aux_manga_template.format, name = name)
     rename_files(folder_directory, template, starter_number)
 
-
-def rename_anime(folder_directory, name, season, starter_number = 1):
+def rename_anime(folder_directory, name, season = 1, starter_number = 1):
     """
     Rename a list of files using the anime template
     :param starter_number: number to assign to the first file
@@ -38,11 +37,12 @@ def rename_anime(folder_directory, name, season, starter_number = 1):
     :param name: anime's name
     :param season: season of the anime's episodes
     """
-    #TODO: make season an optional parameter
-    season = int(season)
     aux_anime_template = globalData.anime_template.replace("{episode_number", "{current_number")
-    template = partial(aux_anime_template.format, name = name, season_number = season)
 
+    if "{season_number" in globalData.anime_template:
+        template = partial(aux_anime_template.format, name = name, season_number = season)
+    else:
+        template = partial(aux_anime_template.format, name = name)
     rename_files(folder_directory, template, starter_number)
 
 
