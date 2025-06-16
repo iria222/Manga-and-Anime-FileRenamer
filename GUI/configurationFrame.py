@@ -45,7 +45,10 @@ class ConfigurationFrame(tkinter.Frame):
         Updates the templates displayed in the comboboxes
         """
         self.manga_entry.config(values=get_templates(TemplateType.manga))
+        self.manga_entry.set(globalData.manga_template)
+
         self.anime_entry.config(values=get_templates(TemplateType.anime))
+        self.anime_entry.set(globalData.anime_template)
 
     def change_current_manga_template(self, event):
         change_active_template(self.manga_entry.get(), TemplateType.manga)

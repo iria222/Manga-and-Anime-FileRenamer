@@ -1,7 +1,6 @@
 import tkinter
 import re
 from tkinter import Listbox, Entry, Button, Label, Frame, StringVar, messagebox
-from tkinter.constants import MULTIPLE
 from DBManager import get_templates, insert_template, delete_template
 from Data.globalData import TemplateType
 
@@ -157,7 +156,7 @@ class TemplatesWindow(tkinter.Toplevel):
         manga_label = Label(self.manga_template_frame, text="MANGA TEMPLATES")
         manga_label.grid(row=0, column=0, columnspan=2, **self.padding)
 
-        self.manga_listbox = Listbox(self.manga_template_frame, listvariable= self.manga_listbox_items, selectmode= MULTIPLE)
+        self.manga_listbox = Listbox(self.manga_template_frame, listvariable= self.manga_listbox_items)
         self.manga_listbox.grid(row=1, column=0, **self.padding, sticky="we")
 
         delete_manga_button = Button(self.manga_template_frame, text="Delete selected",
@@ -178,7 +177,7 @@ class TemplatesWindow(tkinter.Toplevel):
         anime_label = Label(self.anime_template_frame, text="ANIME TEMPLATES")
         anime_label.grid(row=0, column=2, columnspan=2, **self.padding)
 
-        self.anime_listbox = Listbox(self.anime_template_frame, listvariable= self.anime_listbox_items, selectmode= MULTIPLE)
+        self.anime_listbox = Listbox(self.anime_template_frame, listvariable= self.anime_listbox_items)
         self.anime_listbox.grid(row=1, column=2, **self.padding, sticky="we")
 
         delete_anime_button = Button(self.anime_template_frame, text="Delete selected",

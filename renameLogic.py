@@ -54,7 +54,9 @@ def rename_files(folder_directory, template, starter_number):
     :param template: template to follow when renaming the files
     """
     current_number = starter_number
-    file_list = natsorted(os.listdir(folder_directory))
+    #Get a list of the files' names excluding the directories
+    file_list = natsorted([f.name for f in os.scandir(folder_directory) if f.is_file(follow_symlinks=False)])
+
     try:
         for file in file_list:
             source = folder_directory + file

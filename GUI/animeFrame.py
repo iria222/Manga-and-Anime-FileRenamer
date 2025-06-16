@@ -8,7 +8,8 @@ class AnimeFrame(tkinter.Frame):
         super().__init__()
 
         padding = {"padx": 5, "pady": 5}
-        self.bind_all("<Button-1>", lambda event: event.widget.focus_set())
+
+        self.bind_all("<Button-1>", lambda event: event.widget.focus_set() if not type(event.widget) == str else self.focus_set())
 
         name_label = Label(self, text="Anime name: ")
         name_label.grid(row=0, column=0, **padding, sticky="w")

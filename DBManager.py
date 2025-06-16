@@ -76,6 +76,7 @@ def delete_template(template, template_type: TemplateType):
                 table = "MangaTemplates"
                 default_template = default_manga_template
 
+            #The deleted template is the active one
             if template == get_active_template(template_type):
                 change_active_template(default_template, template_type)
 
