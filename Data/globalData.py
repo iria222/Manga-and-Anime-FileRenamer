@@ -9,6 +9,9 @@ class TemplateType(Enum):
 default_anime_template = """{name} S{season_number:02d}E{episode_number:02d}"""
 default_manga_template = """{name} V{volume_number:02d}"""
 
+manga_extensions = ["cbz", "cbr", "epub", "mobi", "pdf"]
+video_extensions = ["mp4", "mov", "avi","flv", "mkv","wmv","AVCHD","WEBM","MPEG-4"]
+
 anime_template = default_anime_template
 manga_template = default_manga_template
 
