@@ -13,7 +13,7 @@ class Application:
     def __init__(self):
         main_window = tkinter.Tk()
         center_window(main_window)
-        main_window.title("File renamer")
+        main_window.title("Manga & Anime File Renamer")
 
         main_window.resizable(False, False)
         notebook = Notebook(main_window)
