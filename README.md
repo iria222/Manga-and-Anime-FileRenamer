@@ -1,6 +1,6 @@
 # Manga & Anime FileRenamer
 ## Description
-Rename the files inside a selected folder following your preferred format. Only the files with the supported extensions will be renamed. The rest will be omitted.<br/>
+Rename the files inside a folder following your preferred format. Only the files with the supported extensions will be renamed. The rest will be omitted.<br/>
 This program is meant to be used to quickly rename manga, anime or tv show's files.
 
 ## Supported file extensions
