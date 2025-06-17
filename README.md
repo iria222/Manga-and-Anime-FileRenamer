@@ -9,7 +9,7 @@ This program is meant to be used to quickly rename manga, anime or tv show's fil
 
 ## How to use
 All the files with the supported extensions inside the selected folder will be renamed. If you don't want to modify some of the files' names save them in a different folder before using the application.
-### Renaming manga¡
+### Renaming manga
 <p align = center>
   <img src = https://github.com/user-attachments/assets/a07f00fa-37cc-4433-9482-e84b24107908 style ="width:50%; height:50%;">
 </p>
@@ -19,7 +19,7 @@ Fields:
 - Starter number: starting value when numbering the manga's files. If this box is leave empty, it will take the default value, 1.
 - Folder directory: directory of the folder that contains the files to be renamed. Subfolders will be omitted.
 
-### Renaming anime/tv shows¡
+### Renaming anime/tv shows
 <p align = center>
   <img src = https://github.com/user-attachments/assets/73ab1a39-2586-44ac-9fce-c27414a7f6c5 style ="width:50%; height:50%;">
 </p>
