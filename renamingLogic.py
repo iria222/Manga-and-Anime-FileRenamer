@@ -64,7 +64,7 @@ def rename_files(folder_directory, template, starter_number, supported_extension
             extension = file.split(".")
             extension = extension[len(extension) - 1]
 
-            if not extension in supported_extensions:
+            if not extension.upper() in map(str.upper,supported_extensions):
                 continue
 
             filled_template = template(current_number = current_number)

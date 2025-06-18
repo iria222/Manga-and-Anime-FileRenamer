@@ -1,6 +1,6 @@
 from tkinter import Label, Entry, font, messagebox
 from entryWithPlaceholder import EntryWithPlaceholder
-from renameLogic import *
+from renamingLogic import *
 
 class AnimeFrame(tkinter.Frame):
 

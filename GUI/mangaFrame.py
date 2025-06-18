@@ -1,7 +1,8 @@
 import tkinter.messagebox
-from tkinter import Label, Entry, font, messagebox
+from tkinter import Label, Entry, font
+
 from entryWithPlaceholder import EntryWithPlaceholder
-from renameLogic import *
+from renamingLogic import *
 
 
 class MangaFrame(tkinter.Frame):

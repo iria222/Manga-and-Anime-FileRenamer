@@ -78,7 +78,7 @@ class TemplatesWindow(tkinter.Toplevel):
             return False
 
         if "{season_number" in template and not re.search(r'\{season_number(:\d\dd)?}', template):
-            messagebox.showerror("Error", "Anime template must contain \"{season_number}\"")
+            messagebox.showerror("Error", "The format of the template is incorrect")
             return False
 
         if not re.search(r'\{episode_number(:\d\dd)?}', template):
