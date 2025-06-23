@@ -45,7 +45,7 @@ For anime:
 - <code style="color : red">*</code> {episode_number} : it will be replaced by a number. The files will be numbered in order starting by digit written in the `Starter number` field.
 - {season_number} : it will be replaced by the contents of the `Season number` field.
 
-If you want the numeric values (volume_number, episode_number and season_number) to have a specific number of digits, you can do it by adding <code style="color : green">:0 number_of_digits d</code> at the end of the placeholder.
+If you want the numeric values (volume_number, episode_number and season_number) to have a specific number of digits, you can do it by adding <code style="color : green">:0 number_of_digits d</code> at the end of the placeholder, where number_of_digits must be an integer greater than 0.
 
 #### Examples of correct renaming templates
 `{name} V{volume_number:02d}` -> One Piece V01<br/>
