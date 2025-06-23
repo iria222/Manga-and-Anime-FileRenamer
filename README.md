@@ -47,7 +47,7 @@ For anime:
 
 If you want the numeric values (volume_number, episode_number and season_number) to have a specific number of digits, you can do it by adding <code style="color : green">:0 number_of_digits d</code> at the end of the placeholder.
 
-#### Example of correct renaming templates
+#### Examples of correct renaming templates
 `{name} V{volume_number:02d}` -> One Piece V01<br/>
 `Manga {name} Volume {volume_number:02d}` -> Manga One Piece Volume 01<br/>
 `{name} #{volume_number}` -> One Piece #1<br/>
